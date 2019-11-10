@@ -1,33 +1,51 @@
-const mongoose = require('mongoose');
-
-const DadosDaEstacao = mongoose.model('DadosDaEstacao');
+const mysqlConnectionImported = require('./../config/database');
 
 module.exports = {
 	async index(req, res){
-		const dadosDaEstacao = await DadosDaEstacao.find();
-		return res.json(dadosDaEstacao);
-		//return res.json('TESTE')
+        mysqlConnectionImported.query("SELECT * FROM arduino_data", (err, result)=>{
+            if(!err)
+                res.json(result);
+            else
+                console.log(err);
+        });
 	},
 
 	async show(req, res){
-		const dadosDaEstacao = await DadosDaEstacao.findById(req.params.id);
-		return res.json(dadosDaEstacao);
+		mysqlConnectionImported.query("SELECT * FROM arduino_data WHERE id = ?",[req.params.id],(err, result)=>{
+            if(!err)
+                res.json( result );
+            else
+                console.log(err);
+        });
 	},
 
 	async store(req, res){
-		const dadosDaEstacao = await DadosDaEstacao.create(req.body);
-		return res.json(dadosDaEstacao);
-		//return res.json(req.body);
+		let data = req.body;
+        mysqlConnectionImported.query("INSERT INTO arduino_data(title) VALUES (?);",[data.title],(err, result)=>{
+            if(!err)
+                res.json({ message : "Successfully Created" });
+            else
+                console.log(err);
+        });
 	},
 
 	async update(req,res){
-		const dadosDaEstacao = await DadosDaEstacao.findByIdAndUpdate(req.params.id, req.body, { new: true });
-		return res.json(dadosDaEstacao);
+		let data = req.body;
+        mysqlConnectionImported.query("UPDATE arduino_data SET title = ? WHERE id = ?;",[data.title,req.params.id],(err, result)=>{
+            if(!err)
+                res.json({ message: "Successfully edited" });
+            else
+                console.log(err);
+        })
 	},
 
 	async destroy(req, res){
-		await DadosDaEstacao.findByIdAndRemove(req.params.id);
-		return res.json('Deleted');
+		mysqlConnectionImported.query('DELETE FROM arduino_data WHERE id = ?',[req.params.id],(err, result)=>{
+            if(!err)
+                res.json({ message: "Successfully deleted" });
+            else
+                console.log(err);
+        })
 	}
 
 };

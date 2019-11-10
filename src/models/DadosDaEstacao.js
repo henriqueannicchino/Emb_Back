@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+/*const mongoose = require('mongoose');
 
 const DadosDaEstacaoSchema = new mongoose.Schema({
     createdAt:{
@@ -49,4 +49,4 @@ const DadosDaEstacaoSchema = new mongoose.Schema({
 
 const DadosDaEstacao = mongoose.model('DadosDaEstacao', DadosDaEstacaoSchema);
 
-module.exports = DadosDaEstacao;
+module.exports = DadosDaEstacao;*/
