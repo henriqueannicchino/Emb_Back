@@ -21,7 +21,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "mongoose": "^5.7.9",
+    "mongoose": "^5.13.20",
     "mysql": "^2.17.1",
     "require-dir": "^1.2.0"
   }
